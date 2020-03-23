@@ -12,6 +12,7 @@ import cv2
 import yaml
 
 from scipy.spatial import KDTree
+import time
 
 STATE_COUNT_THRESHOLD = 3
 
@@ -19,6 +20,7 @@ class TLDetector(object):
     def __init__(self):
         rospy.init_node('tl_detector')
         print("TL Detectior INIT")
+        self.out = cv2.VideoWriter('video.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 20, (800, 600))
 
         self.pose = None
         self.waypoints = None
@@ -133,7 +135,18 @@ class TLDetector(object):
         """
 
         #TODO: Remember to change this to use the classifier
-        return light.state
+        cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
+
+        # Dislay images and save them for model training purpuses
+        cv2.imshow('camera', cv_image)
+        cv2.waitKey(1)
+        path = "/home/alberto/Desktop/training_images/traffic_lights/" + str(time.time()) + ".png"
+        ret = cv2.imwrite(path, cv_image)
+        print(ret)
+        self.out.write(cv_image)
+
+
+        #return light.state
 
         if(not self.has_image):
             self.prev_light_loc = None
@@ -175,7 +188,7 @@ class TLDetector(object):
                     diff = d 
                     closest_light = light
                     line_wp_idx = temp_wp_idx
-            rospy.logwarn("Closest Light State: " + str(closest_light))
+            #rospy.logwarn("Closest Light State: " + str(closest_light))
 
         if closest_light:
             state = self.get_light_state(closest_light)
