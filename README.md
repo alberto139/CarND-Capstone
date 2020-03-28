@@ -4,12 +4,12 @@ This repository hosts the our submition for capstone project of the Udacity Self
 
 ### Team
 [Alberto Rivera](https://www.linkedin.com/in/albertogrivera/) <br>
-[Daniel Sadowski](https://www.linkedin.com/in/manish-jauhari-a070194/) <br>
-[Manish Jauhari] <br>
+[Manish Jauhari](https://www.linkedin.com/in/manish-jauhari-a070194/) <br>
+Daniel Sadowski <br>
 
 
 <p align="center">
-![Demo GIF](https://media.giphy.com/media/PnshZoGTlDu6zM3qhC/giphy.gif)
+  <img src="https://media.giphy.com/media/PnshZoGTlDu6zM3qhC/giphy.gif">
 </p>
 
 ### Overview
