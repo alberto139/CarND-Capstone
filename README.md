@@ -2,6 +2,8 @@
 
 This repository hosts the my capstone project for the Udacity Self Driving Car Nanodegree. This project consist of implementing perception, planning and control to get a self driving car around a track.
 
+![Demo GIF](imgs/demo.gif)
+
 ### Overview
 
 ![System_Architecture](https://video.udacity-data.com/topher/2017/September/59b6d115_final-project-ros-graph-v2/final-project-ros-graph-v2.png)

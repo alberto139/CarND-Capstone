@@ -99,7 +99,7 @@ class DBWNode(object):
                 rospy.logwarn("self.stop_for_tl: " + str(self.stop_for_tl))
                 if self.stop_for_tl:
                     self.throttle = 0.0
-                    self.brake = 10.0
+                    self.brake = 200.0
                 self.publish(self.throttle, self.brake, self.steering)
             rate.sleep()
 

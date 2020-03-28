@@ -4,10 +4,11 @@ import numpy as np
 import cv2
 from collections import Counter
 import object_class
+import os
 
 class TLClassifier(object):
     def __init__(self):
-        model_path = "/home/alberto/Desktop/training_images/models/bad_color/frozen_inference_graph.pb" 
+        model_path = os.getcwd() + "/light_classification/frozen_inference_graph.pb" 
         self.conf_threshold = 0.5
 
         gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.333)
