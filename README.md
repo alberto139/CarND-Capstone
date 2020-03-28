@@ -4,7 +4,7 @@ This repository hosts the my capstone project for the Udacity Self Driving Car N
 
 ### Overview
 
-![System_Architecture]https://video.udacity-data.com/topher/2017/September/59b6d115_final-project-ros-graph-v2/final-project-ros-graph-v2.png
+![System_Architecture](https://video.udacity-data.com/topher/2017/September/59b6d115_final-project-ros-graph-v2/final-project-ros-graph-v2.png)
 
 This project implements Perception, Planning and Control through the usage of ROS Nodes that interface with a either a Unity based simulator or Carla, the Udacity Self Driving Car. 
 
