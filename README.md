@@ -3,14 +3,14 @@
 This repository hosts the our submition for capstone project of the Udacity Self Driving Car Nanodegree. This project consist of implementing perception, planning and control to get a self driving car around a track.
 
 ### Team
-**Alberto Rivera**
-**Daniel Sadowski**
-**Manish Jauhari**
+**Alberto Rivera** <br>
+**Daniel Sadowski** <br>
+**Manish Jauhari** <br>
 
 
-<p align="center">
+
 ![Demo GIF](imgs/demo.gif)
-</p>
+
 
 ### Overview
 
