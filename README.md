@@ -9,7 +9,7 @@ This repository hosts the our submition for capstone project of the Udacity Self
 
 
 <p align="center">
-![Demo GIF](imgs/capstone-demo.gif)
+![Demo GIF](imgs/demo.gif)
 </p>
 
 ### Overview
