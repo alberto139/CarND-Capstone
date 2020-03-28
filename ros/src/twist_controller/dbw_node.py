@@ -5,6 +5,7 @@ from std_msgs.msg import Bool
 from dbw_mkz_msgs.msg import ThrottleCmd, SteeringCmd, BrakeCmd, SteeringReport
 from geometry_msgs.msg import TwistStamped
 import math
+from std_msgs.msg import Int32
 
 from twist_controller import Controller
 
@@ -53,6 +54,8 @@ class DBWNode(object):
         self.brake_pub = rospy.Publisher('/vehicle/brake_cmd',
                                          BrakeCmd, queue_size=1)
 
+        
+
         # TODO: Create `Controller` object
         # self.controller = Controller(<Arguments you wish to provide>)
         self.controller = Controller(vehicle_mass=vehicle_mass,
@@ -70,6 +73,8 @@ class DBWNode(object):
         rospy.Subscriber('/vehicle/dbw_enabled', Bool, self.dbw_enabled_cb)
         rospy.Subscriber('/twist_cmd', TwistStamped, self.twist_cb)
         rospy.Subscriber('/current_velocity', TwistStamped, self.velocity_cb)
+        rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
+        rospy.Subscriber('/stop_for_tl', Int32, self.stop_for_tl_cb)
 
         self.current_vel = None
         self.curr_ang_vel = None
@@ -77,6 +82,8 @@ class DBWNode(object):
         self.linear_vel = None
         self.angular_vel = None
         self.throttle = self.steering = self.brake = 0
+        self.traffic = None
+        self.stop_for_tl = None
         
         self.loop()
 
@@ -88,11 +95,22 @@ class DBWNode(object):
             if not None in (self.current_vel, self.linear_vel, self.angular_vel):
                 self.throttle, self.brake, self.steering = self.controller.control(self.current_vel, self.dbw_enabled, self.linear_vel, self.angular_vel)
             if self.dbw_enabled:
+                #rospy.logwarn("self.traffic_cb: " + str(self.traffic))
+                rospy.logwarn("self.stop_for_tl: " + str(self.stop_for_tl))
+                if self.stop_for_tl:
+                    self.throttle = 0.0
+                    self.brake = 10.0
                 self.publish(self.throttle, self.brake, self.steering)
             rate.sleep()
 
     def dbw_enabled_cb(self, msg):
         self.dbw_enabled = msg
+
+    def traffic_cb(self, msg):
+        self.traffic = msg.data
+
+    def stop_for_tl_cb(self, msg):
+        self.stop_for_tl = msg.data
 
     def twist_cb(self, msg):
         self.linear_vel = msg.twist.linear.x

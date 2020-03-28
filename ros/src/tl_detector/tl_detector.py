@@ -86,9 +86,9 @@ class TLDetector(object):
         """
         self.has_image = True
         self.camera_image = msg
-        print("Image CB")
+        #print("Image CB")
         light_wp, state = self.process_traffic_lights()
-        rospy.logwarn("Closest light wp: " + str(light_wp) + "\n Light State: " + str(state))
+        #rospy.logwarn("Closest light wp: " + str(light_wp) + "\n Light State: " + str(state))
 
         '''
         Publish upcoming red lights at camera frequency.
@@ -138,12 +138,12 @@ class TLDetector(object):
         cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
 
         # Dislay images and save them for model training purpuses
-        cv2.imshow('camera', cv_image)
-        cv2.waitKey(1)
-        path = "/home/alberto/Desktop/training_images/traffic_lights/" + str(time.time()) + ".png"
-        ret = cv2.imwrite(path, cv_image)
-        print(ret)
-        self.out.write(cv_image)
+        #cv2.imshow('camera', cv_image)
+        #cv2.waitKey(1)
+        #path = "/home/alberto/Desktop/training_images/traffic_lights/" + str(time.time()) + ".png"
+        #ret = cv2.imwrite(path, cv_image)
+        #print(ret)
+        #self.out.write(cv_image)
 
 
         #return light.state

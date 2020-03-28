@@ -47,7 +47,7 @@ class TLClassifier(object):
             int: ID of traffic light color (specified in styx_msgs/TrafficLight)
 
         """
-        print("getting classification")
+        #print("getting classification")
         output_dict = self.sess.run(
         self.tensor_dict, feed_dict={
         self.image_tensor: np.expand_dims(img, 0)})
@@ -89,7 +89,9 @@ class TLClassifier(object):
         if detected_colors:
             #state = mode(detected_colors)
             count = Counter(detected_colors)
-            print("TL STATE: " + str(count))
-            return count.most_common(1)[0][0]
+            
+            state = count.most_common(1)[0][0]
+            print("TL STATE: " + str(state))
+            #return state
 
         return state
