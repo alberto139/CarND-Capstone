@@ -1,50 +1,38 @@
-This is the project repo for the final project of the Udacity Self-Driving Car Nanodegree: Programming a Real Self-Driving Car. For more information about the project, see the project introduction [here](https://classroom.udacity.com/nanodegrees/nd013/parts/6047fe34-d93c-4f50-8336-b70ef10cb4b2/modules/e1a23b06-329a-4684-a717-ad476f0d8dff/lessons/462c933d-9f24-42d3-8bdc-a08a5fc866e4/concepts/5ab4b122-83e6-436d-850f-9f4d26627fd9).
+# Self Driving Car Engineer - Capstone Project
 
-Please use **one** of the two installation options, either native **or** docker installation.
+This repository hosts the my capstone project for the Udacity Self Driving Car Nanodegree. This project consist of implementing perception, planning and control to get a self driving car around a track.
 
-### Native Installation
+### Overview
 
-* Be sure that your workstation is running Ubuntu 16.04 Xenial Xerus or Ubuntu 14.04 Trusty Tahir. [Ubuntu downloads can be found here](https://www.ubuntu.com/download/desktop).
-* If using a Virtual Machine to install Ubuntu, use the following configuration as minimum:
-  * 2 CPU
-  * 2 GB system memory
-  * 25 GB of free hard drive space
+![System_Architecture]https://video.udacity-data.com/topher/2017/September/59b6d115_final-project-ros-graph-v2/final-project-ros-graph-v2.png
 
-  The Udacity provided virtual machine has ROS and Dataspeed DBW already installed, so you can skip the next two steps if you are using this.
+This project implements Perception, Planning and Control through the usage of ROS Nodes that interface with a either a Unity based simulator or Carla, the Udacity Self Driving Car. 
 
-* Follow these instructions to install ROS
-  * [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu) if you have Ubuntu 16.04.
-  * [ROS Indigo](http://wiki.ros.org/indigo/Installation/Ubuntu) if you have Ubuntu 14.04.
-* [Dataspeed DBW](https://bitbucket.org/DataspeedInc/dbw_mkz_ros)
-  * Use this option to install the SDK on a workstation that already has ROS installed: [One Line SDK Install (binary)](https://bitbucket.org/DataspeedInc/dbw_mkz_ros/src/81e63fcc335d7b64139d7482017d6a97b405e250/ROS_SETUP.md?fileviewer=file-view-default)
-* Download the [Udacity Simulator](https://github.com/udacity/CarND-Capstone/releases).
+### Planning
 
-### Docker Installation
-[Install Docker](https://docs.docker.com/engine/installation/)
+The Planning module consist of of two nodes **Waypoint Loader** and **Waypoint Updater**. Both the simulator and the real world test environment have waypoitns that correspoint to the trajectory the car should follow. These ROS Nodes load the load the predetermined base waypoints and update them to incorporate stopping for traffict signals. 
 
-Build the docker container
-```bash
-docker build . -t capstone
-```
+### Perception
 
-Run the docker file
-```bash
-docker run -p 4567:4567 -v $PWD:/capstone -v /tmp/log:/root/.ros/ --rm -it capstone
-```
+The Perception module takes in a video input from a camera located at the front of the car to detect traffic lights and their state. The main component of the Perception module is a Deep Neural Network based on the **SSD Mobilenet** architecture. The perception module is implemented in the **Traffic Light Detector** and **Traffic Light Classifier** nodes. This model was obtained from the [Tensorflow Detection Model Zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md). This model was pre-trained on the COCO dataset and then fined tuned to detect traffic lights. The fine-tuning consists of gathering traffic light images and manualy labelling them and then re-training the model with these added images. The detection model was trained to not only detect traffic lights but also classify them as Red, Yellow or Green. While the model is excelent at detecting traffic lights it performs rather poorly at classifying them based on color. A decent work around is to use the sub-image of the detected traffic light and use a color thresholding baser classifier. The combination of detection model and the color classifier work very well for simulator.
 
-### Port Forwarding
-To set up port forwarding, please refer to the "uWebSocketIO Starter Guide" found in the classroom (see Extended Kalman Filter Project lesson).
+### Control
+
+The control module consist of a PID controller that follows the waypoints obtained from the Planning module as well as a second PID controller to determine throttle. This is implemented in a **Drive by Wire** Node. This node also takes input from the perception node in order to slow down and stop when a red traffic signal is detected by the Perception module.
+
+### Potential Improvements
+
+The ideal perception module would consist of an end-to-end model that would both detect and classify the traffic signals correctly. One approach to achive this would be to change the color space of the images from the car camera as well as re-training the model to do inference with this new input. Another approach would be to use a different deep neural network architecture all together. **Mask R-CNN** based models seem to perform [particularly well](https://paperswithcode.com/sota/object-detection-on-coco) on object detection tasks.
+
+The control module and the PID controller for steering could also be improved to follow the waypoints more closely by both tunning the PID parameters and chaning how often the trajectory is calculated by the DBW Node.
+
 
 ### Usage
 
 1. Clone the project repository
-```bash
-git clone https://github.com/udacity/CarND-Capstone.git
-```
 
 2. Install python dependencies
-```bash
-cd CarND-Capstone
+```
 pip install -r requirements.txt
 ```
 3. Make and run styx
@@ -54,37 +42,3 @@ catkin_make
 source devel/setup.sh
 roslaunch launch/styx.launch
 ```
-4. Run the simulator
-
-### Real world testing
-1. Download [training bag](https://s3-us-west-1.amazonaws.com/udacity-selfdrivingcar/traffic_light_bag_file.zip) that was recorded on the Udacity self-driving car.
-2. Unzip the file
-```bash
-unzip traffic_light_bag_file.zip
-```
-3. Play the bag file
-```bash
-rosbag play -l traffic_light_bag_file/traffic_light_training.bag
-```
-4. Launch your project in site mode
-```bash
-cd CarND-Capstone/ros
-roslaunch launch/site.launch
-```
-5. Confirm that traffic light detection works on real life images
-
-### Other library/driver information
-Outside of `requirements.txt`, here is information on other driver/library versions used in the simulator and Carla:
-
-Specific to these libraries, the simulator grader and Carla use the following:
-
-|        | Simulator | Carla  |
-| :-----------: |:-------------:| :-----:|
-| Nvidia driver | 384.130 | 384.130 |
-| CUDA | 8.0.61 | 8.0.61 |
-| cuDNN | 6.0.21 | 6.0.21 |
-| TensorRT | N/A | N/A |
-| OpenCV | 3.2.0-dev | 2.4.8 |
-| OpenMP | N/A | N/A |
-
-We are working on a fix to line up the OpenCV versions between the two.
