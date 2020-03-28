@@ -1,8 +1,16 @@
 # Self Driving Car Engineer - Capstone Project
 
-This repository hosts the my capstone project for the Udacity Self Driving Car Nanodegree. This project consist of implementing perception, planning and control to get a self driving car around a track.
+This repository hosts the our submition for capstone project of the Udacity Self Driving Car Nanodegree. This project consist of implementing perception, planning and control to get a self driving car around a track.
 
-![Demo GIF](imgs/demo.gif)
+### Team
+**Alberto Rivera**
+**Daniel Sadowski**
+**Manish Jauhari**
+
+
+<p align="center">
+![Demo GIF](imgs/capstone-demo.gif)
+</p>
 
 ### Overview
 
