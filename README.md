@@ -2,15 +2,20 @@
 
 This repository hosts the our submition for capstone project of the Udacity Self Driving Car Nanodegree. This project consist of implementing perception, planning and control to get a self driving car around a track.
 
-### Team
-[Alberto Rivera](https://www.linkedin.com/in/albertogrivera/) <br>
-[Manish Jauhari](https://www.linkedin.com/in/manish-jauhari-a070194/) <br>
-Daniel Sadowski <br>
-
-
 <p align="center">
   <img src="https://media.giphy.com/media/PnshZoGTlDu6zM3qhC/giphy.gif">
 </p>
+<p align="center">
+Unity simulator interfacing with ROS. The car behaves as expected, following waypoints, stopping on red traffic signals and continuing on green ones.
+</p>
+
+
+
+### Team
+[Alberto Rivera](https://www.linkedin.com/in/albertogrivera/) <br>
+[Manish Jauhari](https://www.linkedin.com/in/manish-jauhari-a070194/) <br>
+[Daniel Sadowski](https://www.linkedin.com/in/daniel-s1992/) <br>
+Vasoya Nikhil
 
 ### Overview
 
